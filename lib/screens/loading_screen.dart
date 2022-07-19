@@ -14,25 +14,39 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocation() async {
-    Future<Position> position = (await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low)) as Future<Position>;
-    print(position);
+    try {
+      // somethingThatExpectsLessThan10(12);
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.low);
+      print(position);
+    } catch (exception) {
+      print(exception);
+    }
+  }
+
+  void somethingThatExpectsLessThan10(int n) {
+    if (n > 10) {
+      throw 'n is greater than 10, n should always be less than 10.';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: Center(
-    //     child: RaisedButton(
-    //       onPressed: () {
-    //         //Get the current location
-    //         print('Your Location is: ');
-    //         getLocation();
-    //       },
-    //       child: Text('Get Location'),
-    //     ),
-    //   ),
-    // );
-    return Scaffold();
+    // String myMargin = '15';
+    String myMargin = 'abc';
+
+    double myMarginAsADouble = 0.0;
+    try {
+      myMarginAsADouble = double.parse(myMargin);
+    } catch (exception) {
+      print(exception);
+      myMarginAsADouble = 30.0;
+    }
+    return Scaffold(
+      body: Container(
+        margin: EdgeInsets.all(myMarginAsADouble),
+        color: Colors.red,
+      ),
+    );
   }
 }
